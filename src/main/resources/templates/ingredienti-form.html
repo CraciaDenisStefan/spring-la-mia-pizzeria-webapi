@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
+<title>Insert title here</title>
+</head>
+<body class="body-background">
+<header th:insert="fragments :: header"></header>
+
+<div class="container my-4">
+	<h1 class="my-4">Aggiungi Ingrediente</h1>
+         <form th:object="${ingrediente}" method="POST" class="text-white">
+                
+              <label for="nome" class="form-label">Nome</label>
+              <input type="text" id="nome" th:field="*{nome}" class="form-control">
+		
+            <button type="submit" class="btn btn-success mt-3" value="STORE">Salva</button>
+        </form>
+        <a class="btn btn-outline-dark d-block mt-4 text-white" th:href="@{/ingredienti}">Torna alla lista dei ingredienti</a>
+</div>	
+
+
+<footer th:insert="fragments :: footer"></footer>
+</body>
+</html>

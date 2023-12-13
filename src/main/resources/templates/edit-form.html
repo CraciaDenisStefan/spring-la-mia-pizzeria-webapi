@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifica Offerta</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
+</head>
+<body class="body-background text-white">
+
+<div class="container my-4">
+    <h1>Modifica Offerta</h1>
+    <form th:object="${offertaSpeciale}" th:action="@{/pizza/{pizza_id}/offerte/edit/{id}(pizza_id=${pizza_id}, id=${offertaSpeciale.id})}" method="post">
+        <label for="pizza">Pizza:</label>
+        <h3 name="pizza_id" th:text="*{pizza.nome}"></h3>
+        
+        <label for="titolo">Titolo:</label>  
+        <input type="text" name="titolo" th:field="*{titolo}" required><br>
+
+        <label for="dataInizio" >Data Inizio: </label>
+        <input type="date" name="dataInizio" th:field="*{dataInizio}"   required><br>
+
+        <label for="dataFine">Data Fine:</label>
+        <input type="date" name="dataFine" th:field="*{dataFine}" required><br>
+
+      <button type="submit" class="btn btn-warning my-3 px-5">Invia</button>
+    </form>
+</div>
+
+</body>
+</html>

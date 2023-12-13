@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
+</head>
+<body class="body-background">
+	<header th:insert="fragments :: header"></header>
+		<div class="container text-white">
+			<h1>Dettagli Pizza</h1>
+		   		<div th:if="${pizza != null}">
+			        <p>
+			            Nome: <span th:text="${pizza.nome}"></span><br>
+			            Descrizione: <span th:text="${pizza.descrizione}"></span><br>
+			            <img th:src="${pizza.fotoUrl}" alt="Pizza Image" style="max-width: 300px; max-height: 300px;" class="my-4"><br>
+			            <div
+							>
+							<h4>Ingredienti</h4>
+							<ul>
+								<li
+									th:each="ingrediente : *{ingredienti}"
+									th:object="${ingrediente}"
+								>
+									[[*{nome}]] 
+								</li>
+							</ul>
+						</div>
+			            Prezzo: <span th:text="'€ ' + ${pizza.prezzo}"></span>
+			        </p>
+			        <div th:if="${not #lists.isEmpty(pizza.offerte)}">
+						 <h2>Offerte Speciali:</h2>
+						    <ul class="list-group">
+						        <li th:each="offerta : ${pizza.offerte}" class="list-group-item d-flex justify-content-between align-items-center">
+						            <span th:text="${offerta.titolo}"></span>
+						            <span class="badge bg-secondary">
+						                Dal <span th:text=" ${offerta.dataInizio} "></span> al <span th:text=" ${offerta.dataFine}"></span>
+						            </span>
+						            <!-- Pulsante Modifica -->
+						    
+									 <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/pizza/{pizza_id}/offerte/edit/{offerta_id}(pizza_id=${pizza.id}, offerta_id=${offerta.id})}" class="btn btn-sm btn-warning mx-2">
+					                Modifica
+					            	</a>     
+						            <!-- Pulsante Elimina -->
+								 <form sec:authorize="hasAuthority('ADMIN')" th:action="@{'/pizza/offerte/delete/' + ${offerta.id}}" method="POST" class="d-inline">
+								    <button type="submit" class="btn btn-danger btn-sm">Elimina</button>
+								</form>
+						        </li>
+						    </ul>
+					</div>        
+		    	</div>
+			    <div th:if="${pizza == null}">
+			        <p>La pizza non è stata trovata.</p>
+			    </div>
+		</div>
+							<div class="col-12 text-center mt-3" sec:authorize="hasAuthority('ADMIN')">
+					    <a th:href="@{/pizza/{pizza_id}/offerta (pizza_id=${pizza.getId()})}" class="btn btn-warning">
+					        Crea nuova offerta speciale
+					    </a>
+					</div>
+    <footer th:insert="fragments :: footer"></footer>
+</body>
+</html>

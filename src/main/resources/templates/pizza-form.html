@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
+</head>
+<body class="body-background">
+
+<div class="container my-4">
+	<h1 class="my-4">Aggiungi pizza</h1>
+         <form th:object="${pizza}" method="POST" class="text-white">
+                
+              <label for="nome" class="form-label">Nome</label>
+              <input type="text" id="nome" th:field="*{nome}" class="form-control">
+              <div th:replace="fragments :: errorDiv('nome')"/>
+             
+              <label for="descrizione" class="form-label">Description</label>
+              <textarea type="text" id="descrizione" th:field="*{descrizione}" class="form-control"></textarea>
+              <div th:replace="fragments :: errorDiv('descrizione')"/>
+
+              <label for="fotoUrl" class="form-label">Foto url</label>
+              <input type="text" id="fotoUrl" th:field="*{fotoUrl}" class="form-control">
+              <div th:replace="fragments :: errorDiv('fotoUrl')"/>
+
+              <label for="prezzo" class="form-label">Prezzo</labele>
+              <input type="text" id="prezzo" th:field="*{prezzo}" class="form-control">
+              <div th:replace="fragments :: errorDiv('prezzo')"/>
+
+				<h4>Ingredienti:</h4>
+				<div
+					th:each="ingrediente : ${ingredienti}"
+					th:object="${ingrediente}"
+				>	
+					<input 
+						type="checkbox"
+						th:id="${'ingrediente-' + ingrediente.id}" 
+						th:value="*{id}" 
+						th:field="${pizza.ingrediente}"
+					>
+					<label
+						th:for="${'ingrediente-' + ingrediente.id}"
+					>[[*{nome}]]</label>
+					<br>
+				</div>
+		
+            <button type="submit" class="btn btn-success mt-3" value="STORE">Salva</button>
+        </form>
+        <a class="btn btn-outline-dark d-block mt-4 text-white" th:href="@{/}">Torna alla lista delle pizze</a>
+</div>	
+</body>
+</html>
