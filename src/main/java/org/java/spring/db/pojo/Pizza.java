@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.validator.constraints.Length; 
 import org.springframework.format.annotation.NumberFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,7 +45,7 @@ public class Pizza {
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private double prezzo;
     
-    @OneToMany(mappedBy = "pizza")
+    @OneToMany(mappedBy = "pizza", cascade = CascadeType.REMOVE)
 	private List<OffertaSpeciale> offerte;
     
     @ManyToMany(cascade = CascadeType.REMOVE)
@@ -107,6 +109,7 @@ public class Pizza {
 	public void setIngrediente(List<Ingrediente> ingrediente) {
 		this.ingrediente = ingrediente;
 	}
+	@JsonIgnore
 	public void setIngrediente(Ingrediente... ingrediente) {	
 		setIngrediente(Arrays.asList(ingrediente));
 	}

@@ -14,16 +14,18 @@ import org.springframework.security.web.SecurityFilterChain;
 public class AuthConf {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    	http.csrf().disable();
-		http.authorizeHttpRequests()
-	        .requestMatchers("/pizza/create/**").hasAnyAuthority("ADMIN")
-	        .requestMatchers("/pizza/edit/**").hasAnyAuthority("ADMIN")
-	        .requestMatchers("/pizza/*/offerta").hasAnyAuthority("ADMIN")
-	        .requestMatchers("/pizza/*/offerte/edit/*").hasAnyAuthority("ADMIN")
-	        .requestMatchers("/ingredienti/**").hasAnyAuthority("ADMIN")
-	        .requestMatchers("/**").permitAll()
-	        .and().formLogin()
-	        .and().logout()
+    		http.csrf().disable()
+	    		.cors().disable()
+	    		.authorizeHttpRequests()
+		        .requestMatchers("/pizza/create/**").hasAnyAuthority("ADMIN")
+		        .requestMatchers("/pizza/edit/**").hasAnyAuthority("ADMIN")
+		        .requestMatchers("/pizza/*/offerta").hasAnyAuthority("ADMIN")
+		        .requestMatchers("/pizza/*/offerte/edit/*").hasAnyAuthority("ADMIN")
+		        .requestMatchers("/ingredienti/**").hasAnyAuthority("ADMIN")
+		        .requestMatchers("/api/v1.0/**").permitAll()
+		        .requestMatchers("/**").permitAll()
+		        .and().formLogin()
+		        .and().logout()
 	    ;
 		
 		return http.build();
