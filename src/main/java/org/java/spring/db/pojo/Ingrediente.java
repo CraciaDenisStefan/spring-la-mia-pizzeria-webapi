@@ -2,6 +2,7 @@ package org.java.spring.db.pojo;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ public class Ingrediente {
 	private String nome;
 	
 	@ManyToMany(mappedBy = "ingrediente")
+	@JsonIgnore
 	private List<Pizza> pizza;
 	
 	public Ingrediente() {
