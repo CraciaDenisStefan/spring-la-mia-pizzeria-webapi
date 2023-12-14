@@ -38,7 +38,9 @@ export default {
   </div>
 </template>
 <style >
-
+img{
+  width: 20rem;
+}
 </style>
 
 

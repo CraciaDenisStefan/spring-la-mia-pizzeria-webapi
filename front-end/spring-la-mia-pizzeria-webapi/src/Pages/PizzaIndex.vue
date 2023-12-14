@@ -11,7 +11,7 @@ export default {
     data(){
         return{
             pizza: [],
-
+            filtroNome: '',
 
         }
     },
@@ -21,7 +21,7 @@ export default {
     methods: {
       async getPizza() {
       try {
-        const response = await axios.get('http://localhost:8080/api/v1.0/pizza');
+        const response = await axios.get(`http://localhost:8080/api/v1.0/pizza?nome=${this.filtroNome}`);
         this.pizza = response.data;
       } catch (error) {
         console.error('Errore durante la richiesta delle pizze', error);
@@ -40,7 +40,8 @@ export default {
 }
 </script>
 <template lang="">
-  <router-link :to="{ name: 'NuovaPizza' }">Crea Nuova Pizza</router-link>
+  <router-link :to="{ name: 'NuovaPizza' }">Crea Nuova Pizza</router-link><br>
+  <input v-model="filtroNome" @keyup.enter="getPizza" placeholder="Filtra per nome" />
         <ul>
             <li class="spazio" v-for="pizza in pizza" :key="pizza.id">
                 <PizzaSingola :pizza="pizza" />
