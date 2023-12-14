@@ -27,16 +27,30 @@ export default {
         console.error('Errore durante la richiesta delle pizze', error);
       }
     },
+    async eliminaPizza(idPizza) {
+      try {
+        await axios.delete(`http://localhost:8080/api/v1.0/pizza/${idPizza}`);
+        this.getPizza();
+      } catch (error) {
+        console.error('Errore durante l\'eliminazione della pizza', error);
+      }
+    },
   },
     
 }
 </script>
 <template lang="">
+  <router-link :to="{ name: 'NuovaPizza' }">Crea Nuova Pizza</router-link>
         <ul>
-            <li v-for="pizza in pizza" :key="pizza.id">
+            <li class="spazio" v-for="pizza in pizza" :key="pizza.id">
                 <PizzaSingola :pizza="pizza" />
+                <button @click="eliminaPizza(pizza.id)">Elimina Pizza</button>
             </li>
         </ul>
 </template>
-<style lang="scss">
+<style >
+.spazio{
+  margin-bottom: 20px;
+  cursor: pointer;
+}
 </style>
